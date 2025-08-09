@@ -1,0 +1,109 @@
+# CLKernel .gitignore
+# =============================================================================
+# Ignore build artifacts, temporary files, and OS-specific files
+# =============================================================================
+
+# Build artifacts
+build/
+*.bin
+*.img
+*.iso
+*.elf
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.exe
+
+# Temporary files
+*.tmp
+*.temp
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Development artifacts
+PROJECT_STATUS.md
+DEVELOPMENT_PROGRESS.md
+TEST_REPORT.md
+INTERRUPT_SYSTEM_COMPLETE.md
+
+# Build script variants (keep only main build.bat)
+build_allinone.bat
+build_ascii.bat
+build_demo.bat
+build_enterprise.bat
+build_final.bat
+build_living.bat
+build_minimal.bat
+build_professional.bat
+build_revolutionary.bat
+build_working.bat
+
+# Multiple linker scripts (keep only kernel.ld)
+kernel_simple.ld
+linker.ld
+
+# Python scripts
+create_professional.py
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-*
+*.code-workspace
+
+# OS-specific files
+# Windows
+*.lnk
+*.ini
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+*.desktop
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Log files
+*.log
+logs/
+
+# Debug files
+*.pdb
+*.map
+*.sym
+
+# QEMU files
+qemu.log
+serial.log
+
+# Cross-compiler artifacts
+*.d
+*.dep
+*.dependencies
+
+# Testing artifacts
+test_output/
+coverage/
+
+# Documentation builds
+docs/build/
+docs/_build/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Linker generated files
+*.lds.tmp
