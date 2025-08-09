@@ -58,7 +58,7 @@ KERNEL_IMG = $(BUILD_DIR)/clkernel.img
 ISO_FILE = $(BUILD_DIR)/clkernel.iso
 
 # Build targets
-.PHONY: all clean bootloader kernel modules iso run run-headless debug help setup
+.PHONY: all clean bootloader kernel modules iso run run-headless debug help setup test size
 
 # Default target
 all: setup bootloader kernel iso
@@ -87,8 +87,8 @@ bootloader: $(BOOTLOADER)
 
 $(BOOTLOADER): $(BOOT_ASM) | setup
 	@echo "[ASM] Building bootloader..."
-	$(AS) $(ASFLAGS) $(BOOT_ASM) -o $(BOOTLOADER)
-	@echo "[ASM] Bootloader built successfully ($(shell wc -c < $(BOOTLOADER)) bytes)"
+	$(AS) $(ASFLAGS) $(BOOT_ASM) -o $@
+	@echo "[ASM] Bootloader built successfully ($$(wc -c < $@) bytes)"
 
 # Build kernel entry point
 $(BUILD_DIR)/kernel_entry.o: $(KERNEL_ENTRY_ASM) | setup
@@ -176,9 +176,13 @@ debug: $(KERNEL_IMG)
 run-headless: $(KERNEL_IMG)
 	@echo "[QEMU] Starting CLKernel in headless mode..."
 	$(QEMU) -drive file=$(KERNEL_IMG),format=raw,index=0,if=floppy \
-		-m 32M \
-		-nographic \
-		-serial stdio
+	        -m 32M \
+	        -nographic \
+	        -serial stdio
+
+# Run tests (placeholder)
+test:
+	@echo "[TEST] No tests implemented yet"
 
 # Development utilities
 objdump: $(KERNEL_ELF)
@@ -189,11 +193,14 @@ hexdump: $(KERNEL_BIN)
 	@echo "[DEBUG] Kernel binary hex dump:"
 	hexdump -C $(KERNEL_BIN) | head -20
 
-size: $(KERNEL_BIN) $(BOOTLOADER)
+size: $(KERNEL_BIN) $(BOOTLOADER) $(KERNEL_IMG)
 	@echo "[INFO] Build sizes:"
-	@echo "Bootloader: $(shell wc -c < $(BOOTLOADER)) bytes"
-	@echo "Kernel:     $(shell wc -c < $(KERNEL_BIN)) bytes"
-	@echo "Image:      $(shell wc -c < $(KERNEL_IMG)) bytes"
+	@echo -n "Bootloader: "
+	@wc -c < $(BOOTLOADER)
+	@echo -n "Kernel:     "
+	@wc -c < $(KERNEL_BIN)
+	@echo -n "Image:      "
+	@wc -c < $(KERNEL_IMG)
 
 # Clean build files
 clean:
